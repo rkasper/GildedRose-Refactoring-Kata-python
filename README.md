@@ -1,3 +1,7 @@
+# Gilded Rose Refactoring Kata - Python
+
+This is the starting point in Python for the Gilded Rose Refactoring Kata. It began its life as a partial clone of [Emily Bache's Gilded Rose repo](https://github.com/emilybache/GildedRose-Refactoring-Kata), including only the Java files, the Requirements files, and this README. Enjoy! 
+
 # Gilded Rose Refactoring Kata
 
 This Kata was originally created by Terry Hughes (http://twitter.com/TerryHughes). It is already on GitHub [here](https://github.com/NotMyself/GildedRose). See also [Bobby Johnson's description of the kata](http://iamnotmyself.com/2011/02/13/refactor-this-the-gilded-rose-kata/).
