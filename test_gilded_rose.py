@@ -48,6 +48,13 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(12, items[0].quality)
 
+    def test_aged_brie_quality_increases_by_2_when_past_sellin_date(self):
+        """"Aged Brie"'s Quality increases by 2 when it is past its sell-in date"""
+        items: List[Item] = [Item("Aged Brie", 0, 11)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(13, items[0].quality)
+
     def test_quality_is_never_more_than_50(self):
         """The Quality of an item is never more than 50"""
         items: List[Item] = [Item("Aged Brie", 7, 50)]
