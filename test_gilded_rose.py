@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
+from typing import List
 
 from gilded_rose import Item, GildedRose
 
@@ -16,7 +17,7 @@ class GildedRoseTest(unittest.TestCase):
         - All items have a Quality value which denotes how valuable the item is
         - At the end of each day our system lowers both values for every item
         """
-        items = [Item("foo", 7, 11), Item("bar", 23, 42)]
+        items: List[Item] = [Item("foo", 7, 11), Item("bar", 23, 42)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual("foo", items[0].name)
@@ -28,35 +29,35 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_quality_degrades_twice_as_fast(self):
         """Once the sell by date has passed, Quality degrades twice as fast"""
-        items = [Item("foo", 0, 11)]
+        items: List[Item] = [Item("foo", 0, 11)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(9, items[0].quality)
 
     def test_quality_is_never_negative(self):
         """The Quality of an item is never negative"""
-        items = [Item("foo", 7, 0)]
+        items: List[Item] = [Item("foo", 7, 0)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(0, items[0].quality)
 
     def test_aged_brie_increases_in_quality(self):
         """"Aged Brie" actually increases in Quality the older it gets"""
-        items = [Item("Aged Brie", 7, 11)]
+        items: List[Item] = [Item("Aged Brie", 7, 11)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(12, items[0].quality)
 
     def test_quality_is_never_more_than_50(self):
         """The Quality of an item is never more than 50"""
-        items = [Item("Aged Brie", 7, 50)]
+        items: List[Item] = [Item("Aged Brie", 7, 50)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(50, items[0].quality)
 
     def test_sulfuras_never_has_to_be_sold_or_decreases_in_quality(self):
         """"Sulfuras", being a legendary item, never has to be sold or decreases in Quality"""
-        items = [Item("Sulfuras, Hand of Ragnaros", 7, 11)]
+        items: List[Item] = [Item("Sulfuras, Hand of Ragnaros", 7, 11)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(7, items[0].sell_in)
@@ -66,7 +67,7 @@ class GildedRoseTest(unittest.TestCase):
         """"Backstage passes", like aged brie, increases in Quality as its SellIn value approaches;
         Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but
         Quality drops to 0 after the concert"""
-        items = [Item("Backstage passes to a TAFKAL80ETC concert", 42, 11)]
+        items: List[Item] = [Item("Backstage passes to a TAFKAL80ETC concert", 42, 11)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(12, items[0].quality)
