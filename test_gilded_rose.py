@@ -41,6 +41,11 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(0, items[0].quality)
 
+        items = [Item("foo", -1, 0)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(0, items[0].quality)
+
     def test_aged_brie_increases_in_quality(self):
         """"Aged Brie" actually increases in Quality the older it gets"""
         items: List[Item] = [Item("Aged Brie", 7, 11)]
@@ -55,6 +60,13 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(13, items[0].quality)
 
+    def test_aged_brie_quality_is_never_more_than_50(self):
+        """"Aged Brie"'s Quality is never more than 50"""
+        items: List[Item] = [Item("Aged Brie", -1, 50)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(50, items[0].quality)
+
     def test_quality_is_never_more_than_50(self):
         """The Quality of an item is never more than 50"""
         items: List[Item] = [Item("Aged Brie", 7, 50)]
@@ -68,6 +80,12 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(7, items[0].sell_in)
+        self.assertEqual(11, items[0].quality)
+
+        # edge case
+        items = [Item("Sulfuras, Hand of Ragnaros", -1, 11)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
         self.assertEqual(11, items[0].quality)
 
     def test_backstage_passes(self):
@@ -93,6 +111,19 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(0, items[0].quality)
+
+    def test_backstage_passes_edge_cases(self):
+        """"Backstage passes" with Quality 49 and Sellin <=10 days goes up to 50.
+        "Backstage passes" with Quality 48 and Sellin <=5 days goes up to 50."""
+        items: List[Item] = [Item("Backstage passes to a TAFKAL80ETC concert", 10, 49)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(50, items[0].quality)
+
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 5, 48)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(50, items[0].quality)
 
 
 if __name__ == '__main__':
