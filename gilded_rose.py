@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-MAX_QUALITY = 50
-SULFURAS = "Sulfuras, Hand of Ragnaros"
-BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert"
-AGED_BRIE = "Aged Brie"
+MAX_QUALITY: int = 50
+SULFURAS: str = "Sulfuras, Hand of Ragnaros"
+AGED_BRIE: str = "Aged Brie"
+BACKSTAGE_PASSES: str = "Backstage passes to a TAFKAL80ETC concert"
+CONJURED: str = "Conjured"
 
 
 class GildedRose(object):
@@ -17,10 +18,12 @@ class GildedRose(object):
             self.update_if_sulfuras(item)
             self.update_if_aged_brie(item)
             self.update_if_backstage_passes(item)
+            self.update_if_conjured(item)
 
     @staticmethod
     def update_if_normal_item(item):
-        if not (item.name == AGED_BRIE or BACKSTAGE_PASSES == item.name or SULFURAS == item.name):
+        if not (item.name == AGED_BRIE or BACKSTAGE_PASSES == item.name or SULFURAS == item.name
+                or CONJURED == item.name):
             item.sell_in -= 1
             if item.sell_in > 0:
                 item.quality -= 1
@@ -62,6 +65,12 @@ class GildedRose(object):
 
             if item.sell_in < 0:
                 item.quality = 0
+
+    @staticmethod
+    def update_if_conjured(item):
+        if CONJURED == item.name:
+            item.sell_in -= 1
+            item.quality -= 2
 
 
 class Item:

@@ -124,7 +124,15 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose = GildedRose(items)
         gilded_rose.update_inventory()
         self.assertEqual(50, items[0].quality)
-		
+
+    def test_conjured_item(self):
+        """"Conjured" items degrade in Quality twice as fast as normal items"""
+        items: List[Item] = [Item("Conjured", 7, 11)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_inventory()
+        self.assertEqual(6, items[0].sell_in)
+        self.assertEqual(9, items[0].quality)
+
 
 if __name__ == '__main__':
     unittest.main()
