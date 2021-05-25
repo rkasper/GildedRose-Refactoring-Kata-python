@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from abc import abstractmethod
+
 MAX_QUALITY: int = 50
 SULFURAS: str = "Sulfuras, Hand of Ragnaros"
 AGED_BRIE: str = "Aged Brie"
@@ -14,11 +16,7 @@ class GildedRose(object):
     def update_inventory(self):
         item: Item
         for item in self.items:
-            item.update_if_normal_item()
-            item.update_if_sulfuras()
-            item.update_if_aged_brie()
-            item.update_if_backstage_passes()
-            item.update_if_conjured()
+            item.update();
 
 
 class Item:
@@ -34,49 +32,56 @@ class Item:
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
 
-    def update_if_normal_item(self):
-        if not (self.name == AGED_BRIE or BACKSTAGE_PASSES == self.name or SULFURAS == self.name
-                or CONJURED == self.name):
-            self.sell_in -= 1
-            if self.sell_in > 0:
-                self.quality -= 1
-            else:
-                self.quality -= 2
-            if self.quality < 0:
-                self.quality = 0
+    @abstractmethod
+    def update(self):
+        pass
 
-    def update_if_sulfuras(self):
-        if SULFURAS == self.name:
-            pass
 
-    def update_if_aged_brie(self):
-        if AGED_BRIE == self.name:
-            self.sell_in -= 1
-            if self.sell_in > 0:
-                self.quality += 1
-            else:
-                self.quality += 2
-            if self.quality > MAX_QUALITY:
-                self.quality = MAX_QUALITY
-
-    def update_if_backstage_passes(self):
-        # Backstage Passes
-        if BACKSTAGE_PASSES == self.name:
-            self.sell_in -= 1
-
-            if self.quality < MAX_QUALITY:
-                self.quality += 1
-                if self.sell_in < 11:
-                    if self.quality < MAX_QUALITY:
-                        self.quality += 1
-                if self.sell_in < 6:
-                    if self.quality < MAX_QUALITY:
-                        self.quality += 1
-
-            if self.sell_in < 0:
-                self.quality = 0
-
-    def update_if_conjured(self):
-        if CONJURED == self.name:
-            self.sell_in -= 1
+class NormalItem(Item):
+    def update(self):
+        self.sell_in -= 1
+        if self.sell_in > 0:
+            self.quality -= 1
+        else:
             self.quality -= 2
+        if self.quality < 0:
+            self.quality = 0
+
+
+class Sulfuras(Item):
+    def update(self):
+        pass
+
+
+class AgedBrie(Item):
+    def update(self):
+        self.sell_in -= 1
+        if self.sell_in > 0:
+            self.quality += 1
+        else:
+            self.quality += 2
+        if self.quality > MAX_QUALITY:
+            self.quality = MAX_QUALITY
+
+
+class BackstagePasses(Item):
+    def update(self):
+        self.sell_in -= 1
+
+        if self.quality < MAX_QUALITY:
+            self.quality += 1
+            if self.sell_in < 11:
+                if self.quality < MAX_QUALITY:
+                    self.quality += 1
+            if self.sell_in < 6:
+                if self.quality < MAX_QUALITY:
+                    self.quality += 1
+
+        if self.sell_in < 0:
+            self.quality = 0
+
+
+class Conjured(Item):
+    def update(self):
+        self.sell_in -= 1
+        self.quality -= 2
