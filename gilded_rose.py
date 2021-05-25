@@ -12,7 +12,7 @@ class GildedRose(object):
     def update_inventory(self):
         item: Item
         for item in self.items:
-            item.update();
+            item.update()
 
 
 class Item:
@@ -20,12 +20,11 @@ class Item:
     quality: int
 
     def __init__(self, sell_in, quality):
-        #self.name = name
         self.sell_in = sell_in
         self.quality = quality
 
     def __repr__(self):
-        return "%s, %s, %s" % (self.sell_in, self.quality)
+        return "%s, %s" % (self.sell_in, self.quality)
 
     @abstractmethod
     def update(self):
