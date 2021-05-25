@@ -14,63 +14,11 @@ class GildedRose(object):
     def update_inventory(self):
         item: Item
         for item in self.items:
-            self.update_if_normal_item(item)
-            self.update_if_sulfuras(item)
-            self.update_if_aged_brie(item)
-            self.update_if_backstage_passes(item)
-            self.update_if_conjured(item)
-
-    @staticmethod
-    def update_if_normal_item(item):
-        if not (item.name == AGED_BRIE or BACKSTAGE_PASSES == item.name or SULFURAS == item.name
-                or CONJURED == item.name):
-            item.sell_in -= 1
-            if item.sell_in > 0:
-                item.quality -= 1
-            else:
-                item.quality -= 2
-            if item.quality < 0:
-                item.quality = 0
-
-    @staticmethod
-    def update_if_sulfuras(item):
-        if SULFURAS == item.name:
-            pass
-
-    @staticmethod
-    def update_if_aged_brie(item):
-        if AGED_BRIE == item.name:
-            item.sell_in -= 1
-            if item.sell_in > 0:
-                item.quality += 1
-            else:
-                item.quality += 2
-            if item.quality > MAX_QUALITY:
-                item.quality = MAX_QUALITY
-
-    @staticmethod
-    def update_if_backstage_passes(item):
-        # Backstage Passes
-        if BACKSTAGE_PASSES == item.name:
-            item.sell_in -= 1
-
-            if item.quality < MAX_QUALITY:
-                item.quality += 1
-                if item.sell_in < 11:
-                    if item.quality < MAX_QUALITY:
-                        item.quality += 1
-                if item.sell_in < 6:
-                    if item.quality < MAX_QUALITY:
-                        item.quality += 1
-
-            if item.sell_in < 0:
-                item.quality = 0
-
-    @staticmethod
-    def update_if_conjured(item):
-        if CONJURED == item.name:
-            item.sell_in -= 1
-            item.quality -= 2
+            item.update_if_normal_item()
+            item.update_if_sulfuras()
+            item.update_if_aged_brie()
+            item.update_if_backstage_passes()
+            item.update_if_conjured()
 
 
 class Item:
@@ -85,3 +33,50 @@ class Item:
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+
+    def update_if_normal_item(self):
+        if not (self.name == AGED_BRIE or BACKSTAGE_PASSES == self.name or SULFURAS == self.name
+                or CONJURED == self.name):
+            self.sell_in -= 1
+            if self.sell_in > 0:
+                self.quality -= 1
+            else:
+                self.quality -= 2
+            if self.quality < 0:
+                self.quality = 0
+
+    def update_if_sulfuras(self):
+        if SULFURAS == self.name:
+            pass
+
+    def update_if_aged_brie(self):
+        if AGED_BRIE == self.name:
+            self.sell_in -= 1
+            if self.sell_in > 0:
+                self.quality += 1
+            else:
+                self.quality += 2
+            if self.quality > MAX_QUALITY:
+                self.quality = MAX_QUALITY
+
+    def update_if_backstage_passes(self):
+        # Backstage Passes
+        if BACKSTAGE_PASSES == self.name:
+            self.sell_in -= 1
+
+            if self.quality < MAX_QUALITY:
+                self.quality += 1
+                if self.sell_in < 11:
+                    if self.quality < MAX_QUALITY:
+                        self.quality += 1
+                if self.sell_in < 6:
+                    if self.quality < MAX_QUALITY:
+                        self.quality += 1
+
+            if self.sell_in < 0:
+                self.quality = 0
+
+    def update_if_conjured(self):
+        if CONJURED == self.name:
+            self.sell_in -= 1
+            self.quality -= 2
