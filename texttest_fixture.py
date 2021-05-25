@@ -27,4 +27,4 @@ if __name__ == "__main__":
         for item in items:
             print(item)
         print("")
-        GildedRose(items).update_inventory()
+        GildedRose(items).update_quality()

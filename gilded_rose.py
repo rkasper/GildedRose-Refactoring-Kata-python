@@ -11,7 +11,7 @@ class GildedRose(object):
     def __init__(self, items):
         self.items = items
 
-    def update_inventory(self):
+    def update_quality(self):
         item: Item
         for item in self.items:
             # Update if the item is a normal item
