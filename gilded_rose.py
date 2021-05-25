@@ -2,10 +2,6 @@
 from abc import abstractmethod
 
 MAX_QUALITY: int = 50
-SULFURAS: str = "Sulfuras, Hand of Ragnaros"
-AGED_BRIE: str = "Aged Brie"
-BACKSTAGE_PASSES: str = "Backstage passes to a TAFKAL80ETC concert"
-CONJURED: str = "Conjured"
 
 
 class GildedRose(object):
@@ -20,17 +16,16 @@ class GildedRose(object):
 
 
 class Item:
-    name: str
     sell_in: int
     quality: int
 
-    def __init__(self, name, sell_in, quality):
-        self.name = name
+    def __init__(self, sell_in, quality):
+        #self.name = name
         self.sell_in = sell_in
         self.quality = quality
 
     def __repr__(self):
-        return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+        return "%s, %s, %s" % (self.sell_in, self.quality)
 
     @abstractmethod
     def update(self):
