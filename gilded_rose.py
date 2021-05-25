@@ -10,16 +10,16 @@ class GildedRose(object):
     def __init__(self, items):
         self.items = items
 
-    def update_quality(self):
+    def update_inventory(self):
         item: Item
         for item in self.items:
-            self.handle_if_normal_item(item)
-            self.handle_if_sulfuras(item)
-            self.handle_if_aged_brie(item)
-            self.handle_if_backstage_passes(item)
+            self.update_if_normal_item(item)
+            self.update_if_sulfuras(item)
+            self.update_if_aged_brie(item)
+            self.update_if_backstage_passes(item)
 
     @staticmethod
-    def handle_if_normal_item(item):
+    def update_if_normal_item(item):
         if not (item.name == AGED_BRIE or BACKSTAGE_PASSES == item.name or SULFURAS == item.name):
             item.sell_in -= 1
             if item.sell_in > 0:
@@ -30,12 +30,12 @@ class GildedRose(object):
                 item.quality = 0
 
     @staticmethod
-    def handle_if_sulfuras(item):
+    def update_if_sulfuras(item):
         if SULFURAS == item.name:
             pass
 
     @staticmethod
-    def handle_if_aged_brie(item):
+    def update_if_aged_brie(item):
         if AGED_BRIE == item.name:
             item.sell_in -= 1
             if item.sell_in > 0:
@@ -46,7 +46,7 @@ class GildedRose(object):
                 item.quality = MAX_QUALITY
 
     @staticmethod
-    def handle_if_backstage_passes(item):
+    def update_if_backstage_passes(item):
         # Backstage Passes
         if BACKSTAGE_PASSES == item.name:
             item.sell_in -= 1
