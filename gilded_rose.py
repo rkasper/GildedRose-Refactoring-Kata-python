@@ -30,6 +30,26 @@ class Item:
     def update(self):
         pass
 
+    @staticmethod
+    def create_normal_item(sell_in, quality):
+        return NormalItem(sell_in, quality)
+
+    @staticmethod
+    def create_sulfuras(sell_in, quality):
+        return Sulfuras(sell_in, quality)
+
+    @staticmethod
+    def create_aged_brie(sell_in, quality):
+        return AgedBrie(sell_in, quality)
+
+    @staticmethod
+    def create_backstage_passes(sell_in, quality):
+        return BackstagePasses(sell_in, quality)
+
+    @staticmethod
+    def create_conjured(sell_in, quality):
+        return Conjured(sell_in, quality)
+
 
 class NormalItem(Item):
     def update(self):
