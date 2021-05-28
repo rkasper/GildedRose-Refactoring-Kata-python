@@ -52,6 +52,11 @@ class Item:
 
 
 class NormalItem(Item):
+    # TODO Consider raising an exception if someone invokes any of the constructors. This code might work:
+    # def __init__(self):
+    #     """ "Private" constructor. """
+    #     raise Exception("This class is private. Create it through Item.create_normal_item().")
+
     def update(self):
         self.sell_in -= 1
         if self.sell_in > 0:
